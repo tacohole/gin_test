@@ -30,7 +30,7 @@ func getRouter(withTemplates bool) *gin.Engine {
 func testHTTPResponse(t *testing.T, r *gin.Engine, req *http.Request, f func(w *httptest.ResponseRecorder) bool) {
 
 	//create a response recorder
-	w := httptest.NewRecorder
+	w := httptest.NewRecorder()
 
 	r.ServeHTTP(w, req)
 
