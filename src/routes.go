@@ -1,5 +1,7 @@
 package main
 
 func initializeRoutes() {
-	router.Get("/", showIndexPage)
+	router.GET("/", showIndexPage)
+
+	router.GET("/article/view/:article_id", getArticle)
 }

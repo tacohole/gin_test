@@ -2,6 +2,7 @@ package main
 
 import (
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -9,15 +10,26 @@ import (
 func showIndexPage(c *gin.Context) {
 	articles := getAllArticles()
 	//call context to render a template
-	c.HTML(
-		//set status 200 to OK
-		http.StatusOK,
-		//use the index.html template
-		"index.html",
-		//supply the title and payload
+	render(c,
 		gin.H{
 			"title":   "Home Page",
-			"payload": articles,
-		},
-	)
+			"payload": articles},
+		"index.html")
+}
+
+func getArticle(c *gin.Context) {
+	if articleID, err := strconv.Atoi(c.Param("article_id")); err == nil {
+		if article, err := getArticleById(articleID); err == nil {
+			render(c,
+				gin.H{
+					"title":   article.Title,
+					"payload": article,
+				},
+				"article.html")
+		} else {
+			c.AbortWithError(http.StatusNotFound, err)
+		}
+	} else {
+		c.AbortWithStatus(http.StatusNotFound)
+	}
 }
