@@ -163,7 +163,7 @@ func TestRegisterAuthenticated(t *testing.T) {
 
 	http.SetCookie(w, &http.Cookie{Name: "token", Value: "123"})
 
-	r.POST("/u/register", ensureNotLoggedIn(), performRegistration)
+	r.POST("/u/register", ensureNotLoggedIn(), register)
 
 	registrationPayload := getRegistrationPOSTPayload()
 	req, _ := http.NewRequest("POST", "/u/login", strings.NewReader(registrationPayload))
@@ -183,7 +183,7 @@ func TestRegisterUnauthenticated(t *testing.T) {
 
 	r := getRouter(true)
 
-	r.POST("/u/register", ensureNotLoggedIn(), performRegistration)
+	r.POST("/u/register", ensureNotLoggedIn(), register)
 
 	registrationPayload := getRegistrationPOSTPayload()
 	req, _ := http.NewRequest("POST", "/u/login", strings.NewReader(registrationPayload))
@@ -209,7 +209,7 @@ func TestRegisterUnauthenticatedUnavailableUsername(t *testing.T) {
 
 	r := getRouter(true)
 
-	r.POST("/u/register", ensureNotLoggedIn(), performRegistration)
+	r.POST("/u/register", ensureNotLoggedIn(), register)
 
 	registrationPayload := getRegistrationPOSTPayload()
 	req, _ := http.NewRequest("POST", "/u/login", strings.NewReader(registrationPayload))

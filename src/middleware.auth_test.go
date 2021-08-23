@@ -14,7 +14,7 @@ func TestEnsureLoggedInUnauthenticated(t *testing.T) {
 		t.Fail()
 	})
 
-	TestMiddlewareRequest(t, r, http.StatusUnauthorized)
+	testMiddlewareRequest(t, r, http.StatusUnauthorized)
 }
 
 func TestEnsureLoggedInAuthenticated(t *testing.T) {
@@ -23,7 +23,7 @@ func TestEnsureLoggedInAuthenticated(t *testing.T) {
 		c.Status(http.StatusOK)
 	})
 
-	TestMiddlewareRequest(t, r, http.StatusOK)
+	testMiddlewareRequest(t, r, http.StatusOK)
 }
 
 func TestEnsureNotLoggedInAuthenticated(t *testing.T) {
@@ -32,7 +32,7 @@ func TestEnsureNotLoggedInAuthenticated(t *testing.T) {
 		t.Fail()
 	})
 
-	TestMiddlewareRequest(t, r, http.StatusUnauthorized)
+	testMiddlewareRequest(t, r, http.StatusUnauthorized)
 }
 
 func TestEnsureNotLoggedInUnauthenticated(t *testing.T) {
@@ -41,7 +41,7 @@ func TestEnsureNotLoggedInUnauthenticated(t *testing.T) {
 		c.Status(http.StatusOK)
 	})
 
-	TestMiddlewareRequest(t, r, http.StatusOK)
+	testMiddlewareRequest(t, r, http.StatusOK)
 }
 
 func TestSetUserStatusAuthenticated(t *testing.T) {

@@ -19,39 +19,33 @@ func performLogin(c *gin.Context) {
 	username := c.PostForm("username")
 	password := c.PostForm("password")
 
-	var sameSiteCookie http.SameSite
-
 	if isUserValid(username, password) {
 		token := generateSessionToken()
-		c.SetCookie("token", token, 3600, false, true)
+		c.SetCookie("token", token, 3600, "", "", false, true)
 		c.Set("is_logged_in", true)
 
 		render(c, gin.H{
-			"title" : "Successful login",
+			"title": "Successful login",
 		}, "login.succcessful.html")
 	} else {
 		c.HTML(http.StatusBadRequest, "login.html", gin.H{
-			"ErrorTitle" : "Login Failed",
-			"Error Message" : "Invalid Credentials Provided",
+			"ErrorTitle":    "Login Failed",
+			"Error Message": "Invalid Credentials Provided",
 		})
 	}
 
 }
-
 
 func generateSessionToken() string {
 	return strconv.FormatInt(rand.Int63(), 16)
 }
 
 func logout(c *gin.Context) {
-	var sameSiteCookie http.SameSite;
 
-	c.SetCookie("token", "", -1, false, true)
+	c.SetCookie("token", "", -1, "", "", false, true)
 	c.Redirect(http.StatusTemporaryRedirect, "/")
 
-
 }
-
 
 func showRegistrationPage(c *gin.Context) {
 	render(c, gin.H{
@@ -65,21 +59,19 @@ func register(c *gin.Context) {
 	username := c.PostForm("username")
 	password := c.PostForm("password")
 
-	var sameSiteCookie http.SameSite;
-
 	if _, err := registerNewUser(username, password); err == nil {
 		token := generateSessionToken()
 		c.SetCookie("token", token, 3600, "", "", false, true)
 		c.Set("is_logged_in", true)
-	
+
 		render(c, gin.H{
-			"title" : "Successful Registration & Login"
+			"title": "Successful Registration & Login",
 		}, "login-successful.html")
-	
+
 	} else {
 		c.HTML(http.StatusBadRequest, "register.html", gin.H{
-			"ErrorTitle" : "Registration Failed",
-			"ErrorMessage" : err.Error()
+			"ErrorTitle":   "Registration Failed",
+			"ErrorMessage": err.Error(),
 		})
 	}
 
