@@ -4,6 +4,7 @@ func initializeRoutes() {
 	router.Use(setUserStatus())
 
 	router.GET("/", showIndexPage)
+	
 	userRoutes := router.Group("/u")
 	{
 		userRoutes.GET("/login", ensureNotLoggedIn(), showLoginPage)
