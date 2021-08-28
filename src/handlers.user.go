@@ -26,7 +26,7 @@ func performLogin(c *gin.Context) {
 
 		render(c, gin.H{
 			"title": "Successful login",
-		}, "login.succcessful.html")
+		}, "login-successful.html")
 	} else {
 		c.HTML(http.StatusBadRequest, "login.html", gin.H{
 			"ErrorTitle":    "Login Failed",
