@@ -66,7 +66,7 @@ func TestSetUserStatusUnauthenticated(t *testing.T) {
 	r := getRouter(false)
 	r.GET("/", setUserStatus(), func(c *gin.Context) {
 		loggedInInterface, exists := c.Get("is_logged_in")
-		if exists || loggedInInterface.(bool) {
+		if exists && loggedInInterface.(bool) {
 			t.Fail()
 		}
 	})
