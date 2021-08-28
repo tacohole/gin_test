@@ -8,8 +8,8 @@ import (
 
 func ensureLoggedIn() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		_, loggedIn := c.Get("is_logged_in")
-		if !loggedIn {
+		loggedInInterface, loggedIn := c.Get("is_logged_in")
+		if loggedInInterface == nil || !loggedIn {
 			c.AbortWithStatus(http.StatusUnauthorized)
 		}
 	}
@@ -17,8 +17,8 @@ func ensureLoggedIn() gin.HandlerFunc {
 
 func ensureNotLoggedIn() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		_, loggedIn := c.Get("is_logged_in")
-		if loggedIn {
+		loggedInInterface, loggedIn := c.Get("is_logged_in")
+		if loggedInInterface != nil && loggedIn {
 			c.AbortWithStatus(http.StatusUnauthorized)
 		}
 	}
