@@ -25,7 +25,7 @@ func performLogin(c *gin.Context) {
 		c.Set("is_logged_in", true)
 
 		render(c, gin.H{
-			"title": "Successful login",
+			"title": "Successful Login",
 		}, "login-successful.html")
 	} else {
 		c.HTML(http.StatusBadRequest, "login.html", gin.H{
