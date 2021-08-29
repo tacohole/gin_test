@@ -6,8 +6,8 @@ import (
 )
 
 type user struct {
-	Username string `json: "username"`
-	Password string `json: "-"`
+	Username string `json:"username"`
+	Password string `json:"-"`
 }
 
 var userList = []user{

@@ -9,6 +9,7 @@ import (
 var router *gin.Engine
 
 func main() {
+	gin.SetMode(gin.ReleaseMode)
 	router = gin.Default()
 
 	router.LoadHTMLGlob("templates/*")
@@ -22,6 +23,9 @@ func main() {
 //If the header does not specify, render HTML by default,
 //provided that the template name is not present
 func render(c *gin.Context, data gin.H, templateName string) {
+	loggedIn, _ := c.Get("is_logged_in")
+	data["is_logged_in"] = loggedIn
+
 	switch c.Request.Header.Get("Accept") {
 	case "application/json":
 		c.JSON(http.StatusOK, data["payload"])
